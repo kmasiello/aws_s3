@@ -1,0 +1,38 @@
+---
+title: notes
+---
+
+```{r}
+library(paws)
+
+system("aws sso login")
+
+s3 <- paws::s3()
+
+s3$list_buckets()
+
+bucket = "katie-bucketofparts"
+
+contents <- s3$list_objects(bucket)
+
+
+```
+
+write a file 
+```{r}
+# upload a dataframe to S3
+
+# Save mtcars as an RDS file
+filename <- "mtcars.rds"
+saveRDS(mtcars, file = filename)
+
+s3$put_object(
+  Body = filename,
+  Bucket = bucket,
+  Key = filename
+)
+
+s3$list_objects(bucket)
+
+```
+
